@@ -1,23 +1,35 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+
 import './App.css';
+import List from "./components/List";
+
+import data from "./testdata.json";
+
+
+
+
 
 function App() {
+
+  const [ list, setList ] = useState(data);
+
+  const toggleStrike = (id) => {
+    let mapped = list.map(item => {
+      return item.id === Number(id) ? { ...item, complete: !item.complete } : { ...item};
+    });
+    setList(mapped);
+  };
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+        <h1>To Do List</h1>
       </header>
+
+      <List list={list} toggleStrike={toggleStrike}/>
+      
+
     </div>
   );
 }
